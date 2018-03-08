@@ -157,7 +157,7 @@ describe('XCUITestDriver', function () {
         });
       });
 
-      it.skip('default: creates sim and deletes it afterwards', async () => {
+      it.skip('default: creates sim and deletes it afterwards', async function () {
         let caps = UICATALOG_SIM_CAPS;
 
         await killAllSimulators();

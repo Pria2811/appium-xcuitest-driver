@@ -159,7 +159,7 @@ describe('safari - windows and frames', function () {
       (await driver.execute(GET_ELEM_SYNC)).should.be.equal(SUB_FRAME_1_TITLE);
     });
 
-    it.skip('should execute async javascript in frame', async () => {
+    it.skip('should execute async javascript in frame', async function () {
       await driver.frame('first');
       (await driver.executeAsync(GET_ELEM_ASYNC)).should.be.equal(SUB_FRAME_1_TITLE);
     });

@@ -171,7 +171,7 @@ describe('Safari', function () {
         (await el.text()).should.be.equal('I am a div');
       });
       // TODO: figure out what equality means here
-      it.skip('should check if two elements are equal', async () => {
+      it.skip('should check if two elements are equal', async function () {
         let el1 = await driver.elementById('i_am_an_id');
         let el2 = await driver.elementByCss('#i_am_an_id');
         el1.should.be.equal(el2);
@@ -248,7 +248,7 @@ describe('Safari', function () {
         loc.y.should.be.above(0);
       });
       // getTagName not supported by mjwp
-      it.skip('should retrieve tag name of an element', async () => {
+      it.skip('should retrieve tag name of an element', async function () {
         let el = await driver.elementById('fbemail');
         let a = await driver.elementByCss('a');
         (await el.getTagName()).should.be.equal('input');
