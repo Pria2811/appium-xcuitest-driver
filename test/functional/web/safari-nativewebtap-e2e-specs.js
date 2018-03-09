@@ -5,7 +5,7 @@ import { initSession, deleteSession, MOCHA_TIMEOUT } from '../helpers/session';
 import { SAFARI_CAPS } from '../desired';
 import { spinTitleEquals, GUINEA_PIG_PAGE, GUINEA_PIG_SCROLLABLE_PAGE,
          GUINEA_PIG_APP_BANNER_PAGE } from './helpers';
-import { killAllSimulators } from 'appium-ios-simulator';
+import { killAllSimulators } from '../helpers/simulator';
 
 
 chai.should();

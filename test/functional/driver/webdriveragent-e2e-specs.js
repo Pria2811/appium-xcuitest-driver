@@ -2,7 +2,8 @@ import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import { createDevice, deleteDevice } from 'node-simctl';
 import { getVersion } from 'appium-xcode';
-import { getSimulator, killAllSimulators } from 'appium-ios-simulator';
+import { getSimulator } from 'appium-ios-simulator';
+import { killAllSimulators } from '../helpers/simulator';
 import request from 'request-promise';
 import WebDriverAgent from '../../../lib/wda/webDriverAgent'; // eslint-disable-line import/no-unresolved
 import { SubProcess } from 'teen_process';
