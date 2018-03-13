@@ -6,6 +6,7 @@ import { SAFARI_CAPS } from '../desired';
 import { spinTitleEquals, GUINEA_PIG_PAGE, GUINEA_PIG_SCROLLABLE_PAGE,
          GUINEA_PIG_APP_BANNER_PAGE } from './helpers';
 import { killAllSimulators } from '../helpers/simulator';
+import B from 'bluebird';
 
 
 chai.should();
@@ -113,6 +114,7 @@ describe('Safari', function () {
 
           // going back will reveal the full url bar
           await driver.back();
+          await B.delay(500);
 
           // make sure we get the correct position again
           el = await driver.elementByLinkText('i am a link to page 3');
