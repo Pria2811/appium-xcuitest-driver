@@ -19,12 +19,15 @@ const caps = _.defaults({
 const spinRetries = 5;
 
 describe('Safari', function () {
+  this.timeout(MOCHA_TIMEOUT * 2);
+
   let driver;
+  before(async function () {
+    await killAllSimulators();
+  });
 
   function runTests (deviceName) {
     describe(`coordinate conversion - ${deviceName} -`, function () {
-      this.timeout(MOCHA_TIMEOUT * 2);
-
       before(async function () {
         driver = await initSession(_.defaults({
           deviceName,
