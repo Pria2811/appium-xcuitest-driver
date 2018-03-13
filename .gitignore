@@ -5,3 +5,4 @@ coverage
 *.xcconfig
 .DS_Store
 ci-metrics
+package-lock.json*
