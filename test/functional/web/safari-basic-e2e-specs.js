@@ -318,7 +318,7 @@ describe('Safari', function () {
   });
 
   describe('safariIgnoreFraudWarning', function () {
-    this.retries(2);
+    this.retries(3);
 
     describe('false', function () {
       beforeEach(async function () {
