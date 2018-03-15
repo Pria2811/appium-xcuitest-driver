@@ -40,7 +40,6 @@ const GENERIC_CAPS = {
   maxTypingFrequency: 30,
   clearSystemFiles: true,
   showXcodeLog: SHOW_XCODE_LOG,
-  shutdownOtherSimulators: true,
 };
 
 let simUICatalogApp = path.resolve('.', 'node_modules', 'ios-uicatalog', uiCatalogApp[1]);
