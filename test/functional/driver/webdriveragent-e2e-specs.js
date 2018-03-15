@@ -10,6 +10,7 @@ import { SubProcess } from 'teen_process';
 import { PLATFORM_VERSION, DEVICE_NAME } from '../desired';
 import { MOCHA_TIMEOUT } from '../helpers/session';
 import { retryInterval } from 'asyncbox';
+import { resetXCTestProcesses } from '../../../lib/utils';
 
 
 const SIM_DEVICE_NAME = 'webDriverAgentTest';
@@ -28,6 +29,10 @@ function getStartOpts (device) {
     realDevice: false
   };
 }
+const shutdown = async function (sim) {
+  await resetXCTestProcesses(sim.udid, true);
+  await sim.shutdown();
+};
 
 describe('WebDriverAgent', function () {
   this.timeout(MOCHA_TIMEOUT);
@@ -46,7 +51,7 @@ describe('WebDriverAgent', function () {
     after(async function () {
       this.timeout(MOCHA_TIMEOUT);
 
-      await device.shutdown();
+      await shutdown(device);
 
       await deleteDevice(device.udid);
     });
@@ -59,7 +64,9 @@ describe('WebDriverAgent', function () {
       });
       afterEach(async function () {
         try {
-          await retryInterval(5, 1000, device.shutdown.bind(device));
+          await retryInterval(5, 1000, async function () {
+            await shutdown(device);
+          });
         } catch (ign) {}
       });
 
