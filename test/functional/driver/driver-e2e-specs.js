@@ -5,13 +5,12 @@ import wd from 'wd';
 import request from 'request-promise';
 import { retryInterval } from 'asyncbox';
 import { getSimulator } from 'appium-ios-simulator';
-import { killAllSimulators } from '../helpers/simulator';
+import { killAllSimulators, shutdownSimulator } from '../helpers/simulator';
 import { getDevices, createDevice, deleteDevice } from 'node-simctl';
 import _ from 'lodash';
 import B from 'bluebird';
 import { HOST, PORT, MOCHA_TIMEOUT } from '../helpers/session';
 import { UICATALOG_CAPS, UICATALOG_SIM_CAPS, W3C_CAPS } from '../desired';
-import { resetXCTestProcesses } from '../../../lib/utils';
 
 
 const SIM_DEVICE_NAME = 'xcuitestDriverTest';
@@ -26,10 +25,6 @@ const deleteDeviceWithRetry = async function (udid) {
   try {
     await retryInterval(10, 1000, deleteDevice, udid);
   } catch (ign) {}
-};
-const shutdown = async function (sim) {
-  await resetXCTestProcesses(sim.udid, true);
-  await sim.shutdown();
 };
 
 describe('XCUITestDriver', function () {
@@ -50,7 +45,7 @@ describe('XCUITestDriver', function () {
     await server.close();
 
     const sim = await getSimulator(caps.udid);
-    await shutdown(sim);
+    await shutdownSimulator(sim);
     await deleteDeviceWithRetry(caps.udid);
   });
 
@@ -236,7 +231,7 @@ describe('XCUITestDriver', function () {
         simsAfter.should.equal(simsBefore);
 
         // cleanup
-        await shutdown(sim);
+        await shutdownSimulator(sim);
         await deleteDeviceWithRetry(udid);
       });
 
@@ -285,7 +280,7 @@ describe('XCUITestDriver', function () {
         simsAfter.should.equal(simsBefore);
 
         // cleanup
-        await shutdown(sim);
+        await shutdownSimulator(sim);
         await deleteDeviceWithRetry(udid);
       });
     });

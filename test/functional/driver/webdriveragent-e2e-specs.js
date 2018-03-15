@@ -3,14 +3,13 @@ import chaiAsPromised from 'chai-as-promised';
 import { createDevice, deleteDevice } from 'node-simctl';
 import { getVersion } from 'appium-xcode';
 import { getSimulator } from 'appium-ios-simulator';
-import { killAllSimulators } from '../helpers/simulator';
+import { killAllSimulators, shutdownSimulator } from '../helpers/simulator';
 import request from 'request-promise';
 import WebDriverAgent from '../../../lib/wda/webDriverAgent'; // eslint-disable-line import/no-unresolved
 import { SubProcess } from 'teen_process';
 import { PLATFORM_VERSION, DEVICE_NAME } from '../desired';
 import { MOCHA_TIMEOUT } from '../helpers/session';
 import { retryInterval } from 'asyncbox';
-import { resetXCTestProcesses } from '../../../lib/utils';
 
 
 const SIM_DEVICE_NAME = 'webDriverAgentTest';
@@ -29,10 +28,7 @@ function getStartOpts (device) {
     realDevice: false
   };
 }
-const shutdown = async function (sim) {
-  await resetXCTestProcesses(sim.udid, true);
-  await sim.shutdown();
-};
+
 
 describe('WebDriverAgent', function () {
   this.timeout(MOCHA_TIMEOUT);
@@ -51,7 +47,7 @@ describe('WebDriverAgent', function () {
     after(async function () {
       this.timeout(MOCHA_TIMEOUT);
 
-      await shutdown(device);
+      await shutdownSimulator(device);
 
       await deleteDevice(device.udid);
     });
@@ -65,7 +61,7 @@ describe('WebDriverAgent', function () {
       afterEach(async function () {
         try {
           await retryInterval(5, 1000, async function () {
-            await shutdown(device);
+            await shutdownSimulator(device);
           });
         } catch (ign) {}
       });

@@ -17,4 +17,9 @@ async function killAllSimulators () {
   await simKill();
 }
 
-export { killAllSimulators };
+async function shutdownSimulator (sim) {
+  await resetXCTestProcesses(sim.udid, true);
+  await sim.shutdown();
+}
+
+export { killAllSimulators, shutdownSimulator };
